@@ -6,7 +6,10 @@ package ch.heigvd.res.stpatrick;
  * @author Olivier Liechti
  */
 public class StreamProcessorsFactory implements IStreamProcessorsFactory {
-
+    
+    
+IStreamProcessor process = new BasicStreamProcessor();
+IStreamProcessor out = new BasicStreamProcessor();
   @Override
   public IStreamProcessor getProcessor() {
     return new BasicStreamProcessor();
@@ -14,7 +17,14 @@ public class StreamProcessorsFactory implements IStreamProcessorsFactory {
 
   @Override
   public IStreamProcessor getProcessor(String processorName) throws UnknownNameException {
-    throw new UnknownNameException("The factory does not know any processor called " + processorName);
+      if( process.process(processorName, out) == out){
+          return process;
+      
+      }else{
+      throw new UnknownNameException("The factory does not know any processor called " + processorName);
+   
+      }
+    
   }
 
 }
